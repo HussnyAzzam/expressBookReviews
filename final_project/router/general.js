@@ -103,6 +103,24 @@ public_users.get('/author/:author',function (req, res) {
   return res.status(404).json({ message: 'No books found by that author' });
 });
 
+// Get book details based on author (using async/await + Axios)
+public_users.get('/author-async/:author', async function (req, res) {
+  const author = req.params.author;
+  if (!author) {
+    return res.status(400).json({ message: 'Author is required' });
+  }
+
+  try {
+    const response = await axios.get(`http://localhost:5000/author/${encodeURIComponent(author)}`);
+    return res.status(200).send(JSON.stringify(response.data, null, 4));
+  } catch (error) {
+    if (error.response && error.response.status === 404) {
+      return res.status(404).json({ message: 'No books found by that author' });
+    }
+    return res.status(500).json({ message: 'Error fetching books by author', error: error.message });
+  }
+});
+
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
   const title = req.params.title;
