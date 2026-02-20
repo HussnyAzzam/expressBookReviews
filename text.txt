@@ -1,0 +1,167 @@
+example of each file:”
+
+curl http://localhost:8800/review/1
+{"message":"No reviews found for this book."}
+
+”
+
+curl http://localhost:8800/review/1
+
+---
+
+Task 1- getallbooks
+
+curl http://localhost:5000/
+
+{
+"1": {
+"author": "Chinua Achebe",
+"title": "Things Fall Apart",
+"reviews": {}
+},
+"2": {
+"author": "Hans Christian Andersen",
+"title": "Fairy tales",
+"reviews": {}
+},
+"3": {
+"author": "Dante Alighieri",
+"title": "The Divine Comedy",
+"reviews": {}
+},
+"4": {
+"author": "Unknown",
+"title": "The Epic Of Gilgamesh",
+"reviews": {}
+},
+"5": {
+"author": "Unknown",
+"title": "The Book Of Job",
+"reviews": {}
+},
+"6": {
+"author": "Unknown",
+"title": "One Thousand and One Nights",
+"reviews": {}
+},
+"7": {
+"author": "Unknown",
+"title": "Njál's Saga",
+"reviews": {}
+},
+"8": {
+"author": "Jane Austen",
+"title": "Pride and Prejudice",
+"reviews": {}
+},
+"9": {
+"author": "Honoré de Balzac",
+"title": "Le Père Goriot",
+"reviews": {}
+},
+"10": {
+"author": "Samuel Beckett",
+"title": "Molloy, Malone Dies, The Unnamable, the trilogy",
+"reviews": {}
+}
+
+---
+
+Task 2 - getbooksbyISBN
+
+curl http://localhost:5000/isbn/1
+
+{
+"author": "Chinua Achebe",
+"title": "Things Fall Apart",
+"reviews": {}
+}
+
+---
+
+Task 3 - getbooksbyauthor
+
+curl http://localhost:5000/author/Unknown
+
+[
+{
+"isbn": "4",
+"author": "Unknown",
+"title": "The Epic Of Gilgamesh",
+"reviews": {}
+},
+{
+"isbn": "5",
+"author": "Unknown",
+"title": "The Book Of Job",
+"reviews": {}
+},
+{
+"isbn": "6",
+"author": "Unknown",
+"title": "One Thousand and One Nights",
+"reviews": {}
+},
+{
+"isbn": "7",
+"author": "Unknown",
+"title": "Njál's Saga",
+"reviews": {}
+}
+]
+
+---
+
+Task 4 - getbooksbytitle
+
+curl http://localhost:5000/title/The%20Book%20Of%20Job
+[
+{
+"isbn": "5",
+"author": "Unknown",
+"title": "The Book Of Job",
+"reviews": {}
+}
+]
+
+---
+
+Task 5 - getbookreview
+
+curl http://localhost:5000/review/5
+{}
+
+---
+
+Task 6 - register
+
+curl -i -X POST http://localhost:5000/register \
+-H "Content-Type: application/json" \
+-d '{"username":"newuser","password":"secret"}'
+
+{"message":"User successfully registered"}
+
+---
+
+Task 7 - login
+
+curl -i -X POST http://localhost:5000/customer/login \
+-H "Content-Type: application/json" \
+-d '{"username":"newuser","password":"secret"}' -c cookies.txt
+
+{"message":"User successfully logged in"}
+
+---
+
+Task 8 - reviewadded
+
+curl -i -X PUT "http://localhost:5000/customer/auth/review/5?review=Great%20book!" -b cookies.txt
+
+{"message":"Review added/updated successfully","reviews":{"newuser":"Great book!"}}
+
+---
+
+**Task 9 - deletereview**
+curl -i -X DELETE http://localhost:5000/customer/auth/review/5 -b cookies.txt
+
+{"message":"Review deleted successfully","reviews":{}}
